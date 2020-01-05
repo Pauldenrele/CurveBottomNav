@@ -1,10 +1,7 @@
 package com.example.curvebottomnav
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Path
-import android.graphics.Point
+import android.graphics.*
 import android.util.AttributeSet
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -52,7 +49,38 @@ class CurvedBottomNav :BottomNavigationView {
 
         mPiant!!.style = Paint.Style.FILL_AND_STROKE
         mPiant!!.color = Color.WHITE
+        setBackgroundColor(Color.TRANSPARENT)
 
+    }
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+
+        mNavigationBarHeight = height
+        mNavigationBarWidth = width
+
+        mFirstCurveStartPoint.set(mNavigationBarWidth/2 - CURVE_CIRCLE_RADIUS * 2 -CURVE_CIRCLE_RADIUS /3 , 0)
+
+        mFirstCurveEndPoint.set(mNavigationBarWidth/2 , CURVE_CIRCLE_RADIUS + CURVE_CIRCLE_RADIUS /4)
+
+        mSecondCurveStartPoint = mFirstCurveEndPoint
+
+        mSecondCurveEndPoint.set(mNavigationBarWidth /2 + CURVE_CIRCLE_RADIUS *2 + CURVE_CIRCLE_RADIUS / 3, 0)
+
+        mFirstCurveControlPoint1.set(mFirstCurveStartPoint.x + CURVE_CIRCLE_RADIUS + CURVE_CIRCLE_RADIUS /4 , mFirstCurveStartPoint.y)
+
+        mFirstCurveControlPoint2.set(mFirstCurveEndPoint.x -CURVE_CIRCLE_RADIUS *2 + CURVE_CIRCLE_RADIUS  , mFirstCurveEndPoint.y)
+
+        //Second
+        mSecondCurveControlPoint1.set(mSecondCurveStartPoint.x + CURVE_CIRCLE_RADIUS *2  -CURVE_CIRCLE_RADIUS , mSecondCurveStartPoint.y)
+
+        mSecondCurveControlPoint2.set(mSecondCurveEndPoint.x -(CURVE_CIRCLE_RADIUS + CURVE_CIRCLE_RADIUS /4) , mSecondCurveEndPoint.y)
+
+
+    }
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
 
     }
 
